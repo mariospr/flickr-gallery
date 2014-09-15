@@ -330,14 +330,14 @@ class DC_FlickrGallery {
 									<?php elseif ( $tab['id'] == 'sets' && !isset($tab['callback']) ) : ?>
 										<div id="sets" class="<?php if ( $mv ) echo 'ui-tabs-panel ui-widget-content ui-corner-bottom' ?> <?php if ( $tab_count++ != 0 ) echo 'ui-tabs-hide' ?>">
 											<?php
-												$set_url = $url == 'http://flickr.com/photo.gne?id=' ? 'http://flickr.com/photos/' . $attr['user_id'] . '/sets/' : $url . 'sets/';
+												$set_url = $url == 'https://flickr.com/photo.gne?id=' ? 'https://flickr.com/photos/' . $attr['user_id'] . '/sets/' : $url . 'sets/';
 												$sets = $phpFlickr->photosets_getList($attr['user_id']);
 												foreach( $sets['photoset'] as $set ) :
 													?>
 														<div class="flickr-set" id="set-<?php echo $set['id'] ?>">
 															<div class="flickr-set-thumb">
 																<a href="<?php echo $set_url . $set['id']; ?>/">
-																	<img title="<?php echo str_replace("\"", "\\\"", $set['title']) ?>" alt="<?php echo str_replace("\"", "\\\"", $set['title']) ?>" class="flickr-thumb" src="http://farm<?php echo $set['farm']; ?>.static.flickr.com/<?php echo $set['server']; ?>/<?php echo $set['primary']; ?>_<?php echo $set['secret']; ?>_s.jpg" /></a>
+																	<img title="<?php echo str_replace("\"", "\\\"", $set['title']) ?>" alt="<?php echo str_replace("\"", "\\\"", $set['title']) ?>" class="flickr-thumb" src="https://farm<?php echo $set['farm']; ?>.static.flickr.com/<?php echo $set['server']; ?>/<?php echo $set['primary']; ?>_<?php echo $set['secret']; ?>_s.jpg" /></a>
 															</div>
 															<div class="flickr-set-meta">
 																<div class="flickr-set-title"><a href="<?php echo $url ?>sets/<?php echo $set['id']; ?>/"><?php echo $set['title']; ?></a> (<?php echo $set['photos']; ?> photos)</div>
@@ -394,7 +394,7 @@ class DC_FlickrGallery {
 									<?php elseif ( $tab['id'] == 'collections' && !isset($tab['callback']) ) : ?>
 										<div id="collections" class="<?php if ( $mv ) echo 'ui-tabs-panel ui-widget-content ui-corner-bottom' ?> <?php if ( $tab_count++ != 0 ) echo 'ui-tabs-hide' ?>">
 											<?php
-												$collection_url = $url == 'http://flickr.com/photo.gne?id=' ? 'http://flickr.com/photos/' . $attr['user_id'] . '/collections/' : $url . 'collections/';
+												$collection_url = $url == 'https://flickr.com/photo.gne?id=' ? 'https://flickr.com/photos/' . $attr['user_id'] . '/collections/' : $url . 'collections/';
 												$collections = $phpFlickr->call('flickr.collections.getTree', array('user_id' => $attr['user_id']));
 												
 												foreach( $collections['collections']['collection'] as $collection ) :
@@ -402,7 +402,7 @@ class DC_FlickrGallery {
 														<div class="flickr-collection" id="collection-<?php echo $collection['id'] ?>">
 															<div class="flickr-collection-thumb">
 																<a href="<?php echo $collection_url . next(explode('-', $collection['id'])); ?>/" >
-																	<img title="<?php echo str_replace("\"", "\\\"", $collection['title']) ?>" alt="<?php echo str_replace("\"", "\\\"", $collection['title']) ?>" class="flickr-collection-thumb" src="<?php echo preg_replace('|^/|', 'http://www.flickr.com/', $collection['iconlarge']) ?>" />
+																	<img title="<?php echo str_replace("\"", "\\\"", $collection['title']) ?>" alt="<?php echo str_replace("\"", "\\\"", $collection['title']) ?>" class="flickr-collection-thumb" src="<?php echo preg_replace('|^/|', 'https://www.flickr.com/', $collection['iconlarge']) ?>" />
 																</a>
 															</div>
 															<div class="flickr-collection-meta">
@@ -796,7 +796,7 @@ class DC_FlickrGallery {
 					<?php wp_nonce_field('flickr-gallery'); ?>
 					<input type="hidden" name="page_options" value="fg-tabs,fg-API-key,fg-secret,fg-token,fg-user_id,fg-per_page,fg-db-cache,fg-credit-link,fg-flightbox,fg-flightbox-large,fg-flightbox-description" />
 					<p>
-						<?php _e('Flickr <a href="http://www.flickr.com/services/api/keys/">API Key</a>:', 'flickr-gallery') ?>
+						<?php _e('Flickr <a href="https://www.flickr.com/services/api/keys/">API Key</a>:', 'flickr-gallery') ?>
 						<input type="text" name="fg-API-key" value="<?php echo get_option('fg-API-key'); ?>" />
 					</p>
 					<p>
@@ -858,7 +858,7 @@ class DC_FlickrGallery {
 						<?php if ( get_option('fg-secret') && get_option('fg-api-key') ) : ?>
 							<?php printf(__('Authentication Token (<a target="" id="auth-link" href="%s">generate</a>):', 'flickr-gallery'), 'admin-ajax.php?action=flickr_gallery_auth') ?>
 						<?php else : ?>
-							<?php printf(__('Authentication Token (<em>Save your API Key and Secret to generate</em>):', 'flickr-gallery'), 'http://flickr.com') ?>
+							<?php printf(__('Authentication Token (<em>Save your API Key and Secret to generate</em>):', 'flickr-gallery'), 'https://flickr.com') ?>
 						<?php endif; ?>
 						<input type="text" id="fg-token" name="fg-token" value="<?php echo get_option('fg-token'); ?>" />
 					</p>
@@ -888,7 +888,7 @@ class DC_FlickrGallery {
 									<p><?php _e("Some of your Flickr photos should appear below.", 'flickr-gallery'); ?></p>
 									<div>
 										<?php foreach ( $photos['photos']['photo'] as $photo ) : ?>
-											<a style="border: 0px; padding-right: 10px;" href="http://flickr.com/photos/<?php echo get_option('fg-user_id') ?>/<?php echo $photo['id'] ?>">
+											<a style="border: 0px; padding-right: 10px;" href="https://flickr.com/photos/<?php echo get_option('fg-user_id') ?>/<?php echo $photo['id'] ?>">
 												<img src="<?php echo $phpFlickr->buildPhotoURL($photo, 'square') ?>" alt="<?php echo addslashes($photo['title']) ?>" title="<?php echo addslashes($photo['title']) ?>: <?php echo addslashes($photo['description']) ?>" />
 											</a>
 										<?php endforeach; ?>
@@ -966,11 +966,11 @@ class DC_FlickrGallery {
 	}
 	
 	function get_photo_url($nsid = null) {
-		if ( is_null($nsid) ) return 'http://flickr.com/photo.gne?id=';
+		if ( is_null($nsid) ) return 'https://flickr.com/photo.gne?id=';
 		
 		global $phpFlickr;
 		$url = $phpFlickr->urls_getUserPhotos($nsid);
-		return empty($url) ? 'http://flickr.com/photo.gne?id=' : $url;
+		return empty($url) ? 'https://flickr.com/photo.gne?id=' : $url;
 	}
 	
 	function ajax_pagination() {
@@ -981,11 +981,11 @@ class DC_FlickrGallery {
 		if ( !is_null($pager->_extra) ) {
 			ob_start();
 			$pager->page = $_POST['page'];
-			do_action($pager->_extra, $pager, 'http://flickr.com/photo.gne?id=');
+			do_action($pager->_extra, $pager, 'https://flickr.com/photo.gne?id=');
 			$html = str_replace(array("\n", "\r"), '', ob_get_clean());
 		} else {
 			foreach ( $pager->get($_POST['page']) as $key => $photo ) : 
-				$html .= '<div class="flickr-thumb"><a href="http://flickr.com/photo.gne?id=' . $photo['id'] . '"><img class="' . $photo['media'] . '" title="' . str_replace("\"", "\\\"", $photo['title']) . '" src="' . $phpFlickr->buildPhotoURL($photo, 'square') .'" alt="' .  str_replace("\"", "\\\"", $photo['title']) .'" /></a></div>';
+				$html .= '<div class="flickr-thumb"><a href="https://flickr.com/photo.gne?id=' . $photo['id'] . '"><img class="' . $photo['media'] . '" title="' . str_replace("\"", "\\\"", $photo['title']) . '" src="' . $phpFlickr->buildPhotoURL($photo, 'square') .'" alt="' .  str_replace("\"", "\\\"", $photo['title']) .'" /></a></div>';
 			endforeach;
 		}
 		$html .= '<div class="fg-clear"></div>';
@@ -1008,7 +1008,7 @@ class DC_FlickrGallery {
 			<div class="flickr-photos">
 				<?php foreach ( $pager->get($page) as $key => $photo ) : ?>
 					<div class="flickr-thumb">
-						<a href="http://flickr.com/photo.gne?id=<?php echo $photo['id'] ?>"><img class="<?php echo $photo['media'] ?>" title="<?php echo str_replace("\"", "\\\"", $photo['title']) ?>" alt="<?php echo str_replace("\"", "\\\"", $photo['title']) ?>" src="<?php echo $phpFlickr->buildPhotoURL($photo, 'square') ?>" /></a>
+						<a href="https://flickr.com/photo.gne?id=<?php echo $photo['id'] ?>"><img class="<?php echo $photo['media'] ?>" title="<?php echo str_replace("\"", "\\\"", $photo['title']) ?>" alt="<?php echo str_replace("\"", "\\\"", $photo['title']) ?>" src="<?php echo $phpFlickr->buildPhotoURL($photo, 'square') ?>" /></a>
 					</div>
 				<?php endforeach ?>
 				<div class="fg-clear"></div>
