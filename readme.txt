@@ -1,5 +1,5 @@
 === Flickr Gallery ===
-Contributors: dancoulter
+Contributors: dancoulter, mariospr
 Donate link: http://co.deme.me/donate/
 Tags: photos, flickr, gallery, shortcodes
 Requires at least: 2.9
